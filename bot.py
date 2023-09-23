@@ -2,9 +2,7 @@ print("hello there")
 import os
 import openai
 
-os.environ['OPENAI_API_KEY'] = "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"
-openai.api_key="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"
-
+#
 from llama_index import SimpleDirectoryReader
 
 documents = SimpleDirectoryReader('./').load_data()
