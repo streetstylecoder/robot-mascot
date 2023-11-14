@@ -3,9 +3,7 @@ from llama_index import VectorStoreIndex, ServiceContext, Document
 from llama_index.llms import OpenAI
 import openai
 from llama_index import SimpleDirectoryReader
-
-import pyttsx3
-
+import os
 
 
 # engine.say("I will speak this text")
@@ -19,7 +17,10 @@ import pyttsx3
 st.set_page_config(page_title="Chat with the Chacha chaudhry", page_icon="🦙", layout="centered", initial_sidebar_state="auto", menu_items=None)
 # st.markdown(page_bg_img, unsafe_allow_html=True)
 
-openai.api_key="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"
+# openai.api_key="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"
+os.environ['OPENAI_API_KEY'] = st.secrets['OPENAI_API_KEY']
+
+
 st.title("Chacha Chaudhary- a robot mascot")
 st.info("project made for sih internal hack", icon="📃")
 
@@ -51,13 +52,7 @@ if "messages" not in st.session_state.keys(): # Initialize the chat messages his
     st.session_state.messages = [
         {"role": "assistant", "content": "Namaste bacho! Chacha Chaudhry here, ready to answer all your questions with a touch of fun and excitement about namami gange! 😄🎉","avatar":"human"}
     ]
-    # engine = pyttsx3.init()
-    # engine.setProperty('rate', 140)
-    # engine.say("Namaste baaacho! Chaacha Chaudhary here, ready to answer all your questions with a touch of fun and excitement about namaaami gange! ")
-    # if engine._inLoop:
-    #         engine.endLoop()
-    # engine.runAndWait()
-    # engine.stop()
+   
 
     
     
