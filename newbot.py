@@ -4,8 +4,9 @@ from llama_index.llms import OpenAI
 import openai
 from llama_index import SimpleDirectoryReader
 from typing_extensions import Protocol
+import os 
 
-openai.api_key = "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"
+os.environ['OPENAI_API_KEY'] = st.secrets['OPENAI_API_KEY']
 st.header("Chat with the Mental health support assistant")
 
 if "messages" not in st.session_state.keys(): # Initialize the chat message history
