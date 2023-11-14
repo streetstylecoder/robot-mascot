@@ -1,7 +1,8 @@
 print("hello there")
 import os
 import openai
-
+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
+sk-soHSJClAAM54J1BSmb3ET3BlbkFJMnHT2NtHWTekkObntJFJsk-soHSJClAAM54J1BSmb3ET3BlbkFJMnHT2NtHWTekkObntJFJ
 #
 from llama_index import SimpleDirectoryReader
 
