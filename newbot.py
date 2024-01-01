@@ -149,9 +149,9 @@ def load_data():
         reader = SimpleDirectoryReader(input_dir="./data", recursive=True)
         docs = reader.load_data()
         service_context = ServiceContext.from_defaults(
-        llm=OpenAI(model="gpt-3.5-turbo", temperature=0.5, hyperparameters={
-    "n_epochs":2
-  }),
+#         llm=OpenAI(model="gpt-3.5-turbo", temperature=0.5, hyperparameters={
+#     "n_epochs":2
+#   }),
             # system_prompt="I am a psychologist and friend who cares about you a lot. I am here to listen to your thoughts and feelings, and to offer support and suggestions. I will ask you follow-up questions to help me understand your situation better. Please know that you are not alone, and that I am here for you.After answering the query of the person ask them follow up related questions relevant to the same "
             #         )
         #service_context = ServiceContext.from_defaults(llm=OpenAI(model="gpt-3.5-turbo", temperature=0.5, system_prompt="i want you to act a psychologist and friend who cares about me a lot . i will provide you my thoughts you have to show sympathy and care. i want you to give me scientific suggestions that will make me feel better with my issue.Ask me positive followup questions on the same to help me understand and alayse the situation better,Ask followup questions if the query is incomplete"))
