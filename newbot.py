@@ -5,12 +5,13 @@ import openai
 from llama_index import SimpleDirectoryReader
 from typing_extensions import Protocol
 import os 
+from openai import OpenAI
 
 os.environ['OPENAI_API_KEY'] = st.secrets['OPENAI_API_KEY']
 st.header("Chat with the Mental health support assistant")
 
 
-
+client=OpenAI()
 
 if "messages" not in st.session_state.keys(): # Initialize the chat message history
     st.session_state.messages = [
@@ -54,7 +55,7 @@ def analyze_conversation_and_tag(text):
     # Call the OpenAI API with the new interface
     try:
     
-        completion = openai.Completion.create(
+        completion = client.Completion.create(
             model="davinci",
            prompt=prompt,
             temperature=0.3,
@@ -108,12 +109,12 @@ import requests
 #     headers = {
 #         "Authorization": f"Bearer OPENAI_API_KEY"
 #     }
-#     response = requests.get("https://api.openai.com/v1/fine_tuning/jobs", headers=headers)
+#     response = requests.get("https://api.client.com/v1/fine_tuning/jobs", headers=headers)
 #     return response.json()
 
 # # Streamlit application
 
-# file = openai.files.create(
+# file = client.files.create(
 #         file=open("output.jsonl", "rb"),
 #         purpose="fine-tune"
 #     )
@@ -121,7 +122,7 @@ import requests
 
     
 
-# response = openai.fine_tuning.jobs.create(
+# response = client.fine_tuning.jobs.create(
 #         training_file=file.id,
 #         model="gpt-3.5-turbo"
 #     )
@@ -130,9 +131,9 @@ import requests
 # print(fine_tuning_job_id)
 # print("into fine tuning job details ")
 # headers = {
-#         "Authorization": f"Bearer {openai.api_key}"
+#         "Authorization": f"Bearer {client.api_key}"
 #     }
-# url = f"https://api.openai.com/v1/fine_tuning/jobs/{fine_tuning_job_id}"
+# url = f"https://api.client.com/v1/fine_tuning/jobs/{fine_tuning_job_id}"
 # response = requests.get(url, headers=headers)
 # res=response.json()
 # print(res)
