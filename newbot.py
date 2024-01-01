@@ -55,7 +55,7 @@ def analyze_conversation_and_tag(text):
     # Call the OpenAI API with the new interface
     try:
     
-        completion = client.Completion.create(
+        completion = client.completions.create(
             model="davinci",
            prompt=prompt,
             temperature=0.3,
