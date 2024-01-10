@@ -56,7 +56,7 @@ def analyze_conversation_and_tag(text):
     try:
     
         completion = client.completions.create(
-            model="davinci",
+            model="babbel",
            prompt=prompt,
             temperature=0.3,
             max_tokens=300
@@ -99,8 +99,8 @@ def analyze_conversation_and_tag(text):
 
 # Example usage
 conversation = "Your conversation text here"
-tag = analyze_conversation_and_tag(conversation)
-print("Relevant tag:", tag)
+# tag = analyze_conversation_and_tag(conversation)
+# print("Relevant tag:", tag)
 
 import requests
 
