@@ -1,4 +1,4 @@
 streamlit
-llama-index==0.8.69.post1
+llama-index
 openai
 docx2txt

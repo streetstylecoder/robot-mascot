@@ -5,13 +5,11 @@ import openai
 from llama_index import SimpleDirectoryReader
 from typing_extensions import Protocol
 import os 
-from openai import OpenAI
 
 os.environ['OPENAI_API_KEY'] = st.secrets['OPENAI_API_KEY']
 st.header("Chat with the Mental health support assistant")
 
 
-client=OpenAI()
 
 if "messages" not in st.session_state.keys(): # Initialize the chat message history
     st.session_state.messages = [
@@ -36,47 +34,47 @@ def save_tags(tags):
 
 identified_tags = load_tags()
 
-def analyze_conversation_and_tag(text):
-    # List of possible tags
-    tags = [
-        "depression", "anxiety", "parenting", "self esteem", 
-        "relationship dissolution", "workplace relationship", 
-        "spirituality", "trauma", "domestic violence", 
-        "anger management", "intimacy", "grief and loss", 
-        "substance abuse", "family conflict", "marriage", 
-        "relationships", "behavioral change", "addiction", 
-        "legal regulatory", "professional ethics", "human sexuality", 
-        "social relationships", "children-adolescents", "self harm", "diagnosis"
-    ]
+# def analyze_conversation_and_tag(text):
+#     # List of possible tags
+#     tags = [
+#         "depression", "anxiety", "parenting", "self esteem", 
+#         "relationship dissolution", "workplace relationship", 
+#         "spirituality", "trauma", "domestic violence", 
+#         "anger management", "intimacy", "grief and loss", 
+#         "substance abuse", "family conflict", "marriage", 
+#         "relationships", "behavioral change", "addiction", 
+#         "legal regulatory", "professional ethics", "human sexuality", 
+#         "social relationships", "children-adolescents", "self harm", "diagnosis"
+#     ]
 
 
-    prompt = "I will be providing you with a text and you have to categorize my text into one of these themes " + ", ".join(tags) + ". just return me the single tag option which closely relates with the text  Conversation: {text}"
+#     prompt = "I will be providing you with a text and you have to categorize my text into one of these themes " + ", ".join(tags) + ". just return me the single tag option which closely relates with the text  Conversation: {text}"
    
-    # Call the OpenAI API with the new interface
-    try:
+#     # Call the OpenAI API with the new interface
+#     try:
     
-        completion = client.completions.create(
-            model="babbel",
-           prompt=prompt,
-            temperature=0.3,
-            max_tokens=300
-        )
-        completion= completion.choices[0].text.strip()
-        # json_data = json.loads(completion)
+#         completion = openai.ChatCompletion.create(
+#             model="davinci",
+#            prompt=prompt,
+#             temperature=0.3,
+#             max_tokens=300
+#         )
+#         completion= completion.choices[0].text.strip()
+#         # json_data = json.loads(completion)
        
-    except KeyError:
-        print("Error in accessing the response content")
-        return None
-    # Analyze the completion to find the most relevant tag
-    relevant_tag = None
-    for tag in tags:
-        if tag in completion.lower():
-            relevant_tag = tag
-            break
-    if relevant_tag:
-        identified_tags.add(relevant_tag)
-        save_tags(identified_tags)
-    return relevant_tag
+#     except KeyError:
+#         print("Error in accessing the response content")
+#         return None
+#     # Analyze the completion to find the most relevant tag
+#     relevant_tag = None
+#     for tag in tags:
+#         if tag in completion.lower():
+#             relevant_tag = tag
+#             break
+#     if relevant_tag:
+#         identified_tags.add(relevant_tag)
+#         save_tags(identified_tags)
+#     return relevant_tag
 
 
 
@@ -109,12 +107,12 @@ import requests
 #     headers = {
 #         "Authorization": f"Bearer OPENAI_API_KEY"
 #     }
-#     response = requests.get("https://api.client.com/v1/fine_tuning/jobs", headers=headers)
+#     response = requests.get("https://api.openai.com/v1/fine_tuning/jobs", headers=headers)
 #     return response.json()
 
 # # Streamlit application
 
-# file = client.files.create(
+# file = openai.files.create(
 #         file=open("output.jsonl", "rb"),
 #         purpose="fine-tune"
 #     )
@@ -122,7 +120,7 @@ import requests
 
     
 
-# response = client.fine_tuning.jobs.create(
+# response = openai.fine_tuning.jobs.create(
 #         training_file=file.id,
 #         model="gpt-3.5-turbo"
 #     )
@@ -131,9 +129,9 @@ import requests
 # print(fine_tuning_job_id)
 # print("into fine tuning job details ")
 # headers = {
-#         "Authorization": f"Bearer {client.api_key}"
+#         "Authorization": f"Bearer {openai.api_key}"
 #     }
-# url = f"https://api.client.com/v1/fine_tuning/jobs/{fine_tuning_job_id}"
+# url = f"https://api.openai.com/v1/fine_tuning/jobs/{fine_tuning_job_id}"
 # response = requests.get(url, headers=headers)
 # res=response.json()
 # print(res)
@@ -149,9 +147,9 @@ def load_data():
         reader = SimpleDirectoryReader(input_dir="./data", recursive=True)
         docs = reader.load_data()
         service_context = ServiceContext.from_defaults(
-#         llm=OpenAI(model="gpt-3.5-turbo", temperature=0.5, hyperparameters={
-#     "n_epochs":2
-#   }),
+        llm=OpenAI(model="gpt-3.5-turbo", temperature=0.5, hyperparameters={
+    "n_epochs":2
+  }),
             # system_prompt="I am a psychologist and friend who cares about you a lot. I am here to listen to your thoughts and feelings, and to offer support and suggestions. I will ask you follow-up questions to help me understand your situation better. Please know that you are not alone, and that I am here for you.After answering the query of the person ask them follow up related questions relevant to the same "
             #         )
         #service_context = ServiceContext.from_defaults(llm=OpenAI(model="gpt-3.5-turbo", temperature=0.5, system_prompt="i want you to act a psychologist and friend who cares about me a lot . i will provide you my thoughts you have to show sympathy and care. i want you to give me scientific suggestions that will make me feel better with my issue.Ask me positive followup questions on the same to help me understand and alayse the situation better,Ask followup questions if the query is incomplete"))
@@ -183,14 +181,14 @@ if st.session_state.messages[-1]["role"] != "assistant":
         with st.spinner("Thinking..."):
             response = chat_engine.chat(prompt)
             st.write(response.response)
-            analyze_conversation_and_tag(prompt)
+            # analyze_conversation_and_tag(prompt)
             message = {"role": "assistant", "content": response.response}
             st.session_state.messages.append(message)  # Add response to message history
 
 # Breathing Exercise Button
-if st.button("Start Breathing Exercise"):
-    # Display full-screen modal with breathing.gif
-    st.image("breathing.gif", output_format="auto")
+# if st.button("Start Breathing Exercise"):
+#     # Display full-screen modal with breathing.gif
+#     st.image("breathing.gif", output_format="auto")
 
 import pandas as pd
 
@@ -207,14 +205,13 @@ def evaluate():
     topics = filtered_data['topic'].tolist()
     print(topics)
     responses=[]
-    for question in question_texts:
-        response=analyze_conversation_and_tag(question)
-        print(response)
-        responses.append(response)
-    print(responses)
+    # for question in question_texts:
+    #     # response=analyze_conversation_and_tag(question)
+    #     # print(response)
+    #     # responses.append(response)
+    # print(responses)
     
 
 
    
-
 
