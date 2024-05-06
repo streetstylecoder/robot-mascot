@@ -1,6 +1,6 @@
 import streamlit as st
+from llama_index import VectorStoreIndex, ServiceContext, Document
 from llama_index.llms import OpenAI
-from llama_index.core.indices.vector_store.base import VectorStoreIndex,ServiceContext, Document
 import openai
 from llama_index import SimpleDirectoryReader
 from typing_extensions import Protocol
@@ -16,10 +16,7 @@ if "messages" not in st.session_state.keys(): # Initialize the chat message hist
         {"role": "assistant", "content": "Share me anything to feel free"}
     ]
 
-
-
-
-
+    
           
 import json
 def load_tags():
